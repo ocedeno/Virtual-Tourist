@@ -97,12 +97,12 @@
 		06946F881E606F1500848DAB /* Virtual Tourist */ = {
 			isa = PBXGroup;
 			children = (
+				06946FBA1E606F4300848DAB /* Controller */,
+				06946FB91E606F3A00848DAB /* Model */,
 				06946F891E606F1500848DAB /* AppDelegate.swift */,
 				06946F8B1E606F1500848DAB /* ViewController.swift */,
-				06946F8D1E606F1500848DAB /* Main.storyboard */,
-				06946F901E606F1500848DAB /* Assets.xcassets */,
-				06946F921E606F1500848DAB /* LaunchScreen.storyboard */,
-				06946F951E606F1500848DAB /* Info.plist */,
+				06946FB71E606F2800848DAB /* Assets */,
+				06946FB81E606F3100848DAB /* Support Files */,
 			);
 			path = "Virtual Tourist";
 			sourceTree = "<group>";
@@ -123,6 +123,38 @@
 				06946FAB1E606F1500848DAB /* Info.plist */,
 			);
 			path = "Virtual TouristUITests";
+			sourceTree = "<group>";
+		};
+		06946FB71E606F2800848DAB /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				06946F8D1E606F1500848DAB /* Main.storyboard */,
+				06946F921E606F1500848DAB /* LaunchScreen.storyboard */,
+				06946F901E606F1500848DAB /* Assets.xcassets */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		06946FB81E606F3100848DAB /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				06946F951E606F1500848DAB /* Info.plist */,
+			);
+			name = "Support Files";
+			sourceTree = "<group>";
+		};
+		06946FB91E606F3A00848DAB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		06946FBA1E606F4300848DAB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
