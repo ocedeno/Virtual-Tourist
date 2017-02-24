@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -33,15 +33,18 @@
                             <constraint firstAttribute="trailing" secondItem="8Vc-6g-gLB" secondAttribute="trailing" id="oFN-g3-Uck"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="8Vc-6g-gLB" id="Ynh-Qp-zEt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="47.200000000000003" y="90.404797601199405"/>
         </scene>
-        <!--View Controller-->
+        <!--Photo Album View Controller-->
         <scene sceneID="f6L-F7-45p">
             <objects>
-                <viewController id="61p-cs-QYQ" sceneMemberID="viewController">
+                <viewController id="61p-cs-QYQ" customClass="PhotoAlbumViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5DD-uv-6JY"/>
                         <viewControllerLayoutGuide type="bottom" id="ThM-Cn-4z8"/>
@@ -69,7 +72,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="d5a-IZ-9Og">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="flickrCell" reuseIdentifier="flickrCell" id="d5a-IZ-9Og">
                                                 <rect key="frame" x="0.0" y="0.0" width="89" height="79"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -90,6 +93,10 @@
                             <constraint firstItem="kub-sq-svv" firstAttribute="top" secondItem="dqF-Nl-pY8" secondAttribute="top" constant="20" symbolic="YES" id="scf-6T-yUU"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="flickrCollectionView" destination="d4c-BL-Kon" id="APe-We-enl"/>
+                        <outlet property="mapView" destination="ga1-wR-7tn" id="9eq-g8-gYn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mbj-Z7-n4B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
