@@ -17,6 +17,8 @@
 		06946FBD1E6079CA00848DAB /* VTDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 06946FBB1E6079CA00848DAB /* VTDataModel.xcdatamodeld */; };
 		06946FBF1E6079FB00848DAB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06946FBE1E6079FB00848DAB /* MapViewController.swift */; };
 		06946FC11E607A0C00848DAB /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06946FC01E607A0C00848DAB /* PhotoAlbumViewController.swift */; };
+		06946FC91E60DDA400848DAB /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06946FC81E60DDA400848DAB /* FlickrClient.swift */; };
+		06946FCB1E60DDED00848DAB /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06946FCA1E60DDED00848DAB /* FlickrConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		06946FBC1E6079CA00848DAB /* VTDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VTDataModel.xcdatamodel; sourceTree = "<group>"; };
 		06946FBE1E6079FB00848DAB /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		06946FC01E607A0C00848DAB /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
+		06946FC81E60DDA400848DAB /* FlickrClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
+		06946FCA1E60DDED00848DAB /* FlickrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +156,7 @@
 		06946FB91E606F3A00848DAB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				06946FC61E60DD8000848DAB /* Client */,
 				06946FBB1E6079CA00848DAB /* VTDataModel.xcdatamodeld */,
 			);
 			name = Model;
@@ -164,6 +169,23 @@
 				06946FC01E607A0C00848DAB /* PhotoAlbumViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		06946FC61E60DD8000848DAB /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				06946FC71E60DD8E00848DAB /* Flickr */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		06946FC71E60DD8E00848DAB /* Flickr */ = {
+			isa = PBXGroup;
+			children = (
+				06946FC81E60DDA400848DAB /* FlickrClient.swift */,
+				06946FCA1E60DDED00848DAB /* FlickrConstants.swift */,
+			);
+			name = Flickr;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,7 +329,9 @@
 				06946F8A1E606F1500848DAB /* AppDelegate.swift in Sources */,
 				06946FBD1E6079CA00848DAB /* VTDataModel.xcdatamodeld in Sources */,
 				06946FC11E607A0C00848DAB /* PhotoAlbumViewController.swift in Sources */,
+				06946FCB1E60DDED00848DAB /* FlickrConstants.swift in Sources */,
 				06946FBF1E6079FB00848DAB /* MapViewController.swift in Sources */,
+				06946FC91E60DDA400848DAB /* FlickrClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

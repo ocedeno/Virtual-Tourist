@@ -15,6 +15,7 @@ class MapViewController: UIViewController
     @IBOutlet weak var mapView: MKMapView!
     
     //Variables/Constants
+    var pinArray: [MKAnnotation]?
     
     //Life Cycle:
     override func viewDidLoad()
