@@ -29,12 +29,10 @@ struct FlickrConstants {
     struct FlickrParameterKeys {
         static let Method = "method"
         static let APIKey = "api_key"
-        static let GalleryID = "gallery_id"
         static let Extras = "extras"
         static let Format = "format"
         static let NoJSONCallback = "nojsoncallback"
         static let SafeSearch = "safe_search"
-        static let Text = "text"
         static let BoundingBox = "bbox"
         static let Page = "page"
     }
@@ -46,7 +44,6 @@ struct FlickrConstants {
         static let ResponseFormat = "json"
         static let DisableJSONCallback = "1"
         static let GalleryPhotosMethod = "flickr.galleries.getPhotos"
-        static let GalleryID = "5704-72157622566655097"
         static let MediumURL = "url_m"
         static let UseSafeSearch = "1"
     }
@@ -56,7 +53,6 @@ struct FlickrConstants {
         static let Status = "stat"
         static let Photos = "photos"
         static let Photo = "photo"
-        static let Title = "title"
         static let MediumURL = "url_m"
         static let Pages = "pages"
         static let Total = "total"
