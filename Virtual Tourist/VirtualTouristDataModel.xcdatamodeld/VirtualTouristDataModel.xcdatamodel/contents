@@ -3,19 +3,19 @@
     <entity name="Annotations" representedClassName="Annotations" syncable="YES">
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="photo" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photo" inverseName="annotations" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="photo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="annotations" inverseEntity="Photo" syncable="YES"/>
     </entity>
-    <entity name="CurrentMapView" representedClassName="CurrentMapView" syncable="YES" codeGenerationType="class">
+    <entity name="CurrentMapView" representedClassName="CurrentMapView" syncable="YES">
         <attribute name="latitudeDelta" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitudeDelta" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="Photo" representedClassName="Photo" syncable="YES" codeGenerationType="class">
+    <entity name="Photo" representedClassName="Photo" syncable="YES">
         <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="annotations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Annotations" inverseName="photo" inverseEntity="Annotations" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Annotations" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Photo" positionX="-54" positionY="9" width="128" height="75"/>
-        <element name="CurrentMapView" positionX="-36" positionY="36" width="128" height="75"/>
+        <element name="Annotations" positionX="-36" positionY="9" width="128" height="90"/>
+        <element name="Photo" positionX="0" positionY="63" width="128" height="75"/>
+        <element name="CurrentMapView" positionX="27" positionY="81" width="128" height="75"/>
     </elements>
 </model>
