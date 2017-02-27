@@ -23,18 +23,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8Vc-6g-gLB">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="8Vc-6g-gLB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" symbolic="YES" id="bbU-dU-piT"/>
+                            <constraint firstItem="8Vc-6g-gLB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="bbU-dU-piT"/>
                             <constraint firstItem="8Vc-6g-gLB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dTt-vg-AdV"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8Vc-6g-gLB" secondAttribute="baseline" id="k4r-Ad-KJv"/>
                             <constraint firstAttribute="trailing" secondItem="8Vc-6g-gLB" secondAttribute="trailing" id="oFN-g3-Uck"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="whs-df-rfo"/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="8Vc-6g-gLB" id="Ynh-Qp-zEt"/>

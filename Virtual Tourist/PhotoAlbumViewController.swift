@@ -20,6 +20,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = false
     }
     
 

@@ -22,6 +22,7 @@ class MapViewController: UIViewController, MKMapViewDelegate
     {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.isHidden = true
         mapView.delegate = self
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation))
         mapView.addGestureRecognizer(longPressRecognizer)

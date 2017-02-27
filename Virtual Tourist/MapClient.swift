@@ -18,7 +18,5 @@ class MapClient
     {
         let longitudeDelta: CLLocationDegrees = mapView.region.span.longitudeDelta
         let latitudeDelta: CLLocationDegrees = mapView.region.span.latitudeDelta
-        let mapWidthInPixels: CGFloat = mapView.bounds.size.width
-        
     }
 }
