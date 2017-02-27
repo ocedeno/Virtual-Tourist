@@ -21,5 +21,21 @@ class MapViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation))
+        mapView.addGestureRecognizer(longPressRecognizer)
+    }
+    
+    func addAnnotation(gestureRecognizer:UIGestureRecognizer)
+    {
+        if gestureRecognizer.state == UIGestureRecognizerState.began
+        {
+            var touchPoint = gestureRecognizer.location(in: mapView)
+            var newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = newCoordinates
+            
+            print(newCoordinates)
+        }
     }
 }

@@ -14,14 +14,14 @@ class FlickrClient
     [
         FlickrConstants.FlickrParameterKeys.Method: FlickrConstants.FlickrParameterValues.SearchMethod,
         FlickrConstants.FlickrParameterKeys.APIKey: FlickrConstants.FlickrParameterValues.APIKey,
-        FlickrConstants.FlickrParameterKeys.BoundingBox: bboxString(),
+        //FlickrConstants.FlickrParameterKeys.BoundingBox: bboxString(),
         FlickrConstants.FlickrParameterKeys.SafeSearch: FlickrConstants.FlickrParameterValues.UseSafeSearch,
         FlickrConstants.FlickrParameterKeys.Extras: FlickrConstants.FlickrParameterValues.MediumURL,
         FlickrConstants.FlickrParameterKeys.Format: FlickrConstants.FlickrParameterValues.ResponseFormat,
         FlickrConstants.FlickrParameterKeys.NoJSONCallback: FlickrConstants.FlickrParameterValues.DisableJSONCallback
     ]
     
-    private func bboxString() -> String
+    /*private func bboxString() -> String
     {
         // ensure bbox is bounded by minimum and maximums
         if let latitude = Double(latitudeTextField.text!), let longitude = Double(longitudeTextField.text!)
@@ -36,7 +36,7 @@ class FlickrClient
             return "0,0,0,0"
         }
     }
-    
+    */
     private func displayImages(_ methodParameters: [String: AnyObject], withPageNumber: Int)
     {
         //Adding Page to Method's Parameters
@@ -119,6 +119,7 @@ class FlickrClient
                 guard let imageData = try? Data(contentsOf: imageURL) else
                 {
                     print("Image does not exist at '\(imageURL)'")
+                    return
                 }
                 
                 print(imageData)
