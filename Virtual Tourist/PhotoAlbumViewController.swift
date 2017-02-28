@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate
 {
@@ -23,5 +24,5 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate
         self.navigationController?.navigationBar.isHidden = false
     }
     
-
+    
 }
