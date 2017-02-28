@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate
+class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
 
     //IBOutlets:
@@ -22,7 +22,19 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate
     {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = false
+        flickrCollectionView.delegate = self
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
+        return 4
+    }
     
+    private func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
+        let cell = flickrCollectionView.dequeueReusableCell(withReuseIdentifier: "flickrCell", for: indexPath) as UICollectionViewCell
+        cell.backgroundColor = UIColor.black
+        
+        return cell
+    }
 }
