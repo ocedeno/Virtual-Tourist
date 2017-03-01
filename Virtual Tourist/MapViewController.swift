@@ -35,19 +35,30 @@ class MapViewController: UIViewController, MKMapViewDelegate
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
             let annotation = MKPointAnnotation()
+            annotation.title = "Select to see Photos!"
             annotation.coordinate = newCoordinates
             annotations.append(annotation)
         }
-    
+        
         mapView.addAnnotations(annotations)
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl)
     {
-        if view.isSelected
-        {
         let photoAlbumVC = storyboard?.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as? PhotoAlbumViewController
-            self.navigationController?.pushViewController(photoAlbumVC!, animated: true)
+        self.navigationController?.pushViewController(photoAlbumVC!, animated: true)
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinView")
+        if annotationView == nil
+        {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pinView")
+            annotationView!.canShowCallout = true
+            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
+        
+        return annotationView
     }
 }
