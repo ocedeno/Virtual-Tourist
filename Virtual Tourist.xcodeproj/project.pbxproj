@@ -71,6 +71,7 @@
 		06946FCC1E647D9900848DAB /* MapClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
 		06946FD01E64978D00848DAB /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		06946FEB1E649BC900848DAB /* VirtualTouristDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTouristDataModel.xcdatamodel; sourceTree = "<group>"; };
+		06ED6FE21E67374F000CD86C /* VirtualTouristDataModel2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTouristDataModel2.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +214,7 @@
 		06946FCF1E64975C00848DAB /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				06946FD01E64978D00848DAB /* CoreDataStack.swift */,
 				064D76821E649DE5008495CA /* Photo+CoreDataClass.swift */,
 				064D76831E649DE5008495CA /* Photo+CoreDataProperties.swift */,
 				064D76841E649DE5008495CA /* CurrentMapView+CoreDataClass.swift */,
@@ -220,7 +222,6 @@
 				064D76861E649DE5008495CA /* Annotations+CoreDataClass.swift */,
 				064D76871E649DE5008495CA /* Annotations+CoreDataProperties.swift */,
 				06946FEA1E649BC900848DAB /* VirtualTouristDataModel.xcdatamodeld */,
-				06946FD01E64978D00848DAB /* CoreDataStack.swift */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -650,9 +651,10 @@
 		06946FEA1E649BC900848DAB /* VirtualTouristDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				06ED6FE21E67374F000CD86C /* VirtualTouristDataModel2.xcdatamodel */,
 				06946FEB1E649BC900848DAB /* VirtualTouristDataModel.xcdatamodel */,
 			);
-			currentVersion = 06946FEB1E649BC900848DAB /* VirtualTouristDataModel.xcdatamodel */;
+			currentVersion = 06ED6FE21E67374F000CD86C /* VirtualTouristDataModel2.xcdatamodel */;
 			path = VirtualTouristDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
