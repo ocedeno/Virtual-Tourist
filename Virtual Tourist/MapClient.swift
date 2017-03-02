@@ -12,11 +12,4 @@ import MapKit
 
 class MapClient
 {
-    let MERCATOR_RADIUS =  85445659.44705395
-    
-    func getZoomLevel(mapView: MKMapView)
-    {
-        let longitudeDelta: CLLocationDegrees = mapView.region.span.longitudeDelta
-        let latitudeDelta: CLLocationDegrees = mapView.region.span.latitudeDelta
-    }
 }

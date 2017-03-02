@@ -6,7 +6,6 @@
         <relationship name="photo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="annotations" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <entity name="CurrentMapView" representedClassName="CurrentMapView" syncable="YES">
-        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="latitudeDelta" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -18,7 +17,7 @@
     </entity>
     <elements>
         <element name="Annotations" positionX="-36" positionY="9" width="128" height="90"/>
-        <element name="CurrentMapView" positionX="27" positionY="81" width="128" height="120"/>
+        <element name="CurrentMapView" positionX="27" positionY="81" width="128" height="105"/>
         <element name="Photo" positionX="0" positionY="63" width="128" height="75"/>
     </elements>
 </model>

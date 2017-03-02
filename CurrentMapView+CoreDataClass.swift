@@ -21,7 +21,6 @@ public class CurrentMapView: NSManagedObject
             self.longitudeDelta = lonDelta
             self.latitude = lat
             self.longitude = lon
-            self.creationDate = Date()
         }else
         {
             fatalError("Unable to find Entity name!")

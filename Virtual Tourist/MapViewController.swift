@@ -60,8 +60,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         let lonDeltaSort = NSSortDescriptor(key: "longitudeDelta", ascending: false)
         let latSort = NSSortDescriptor(key: "latitude", ascending: false)
         let lonSort = NSSortDescriptor(key: "longitude", ascending: false)
-        let timeSort = NSSortDescriptor(key: "creationDate", ascending: true)
-        request.sortDescriptors = [latDeltaSort, lonDeltaSort, latSort, lonSort, timeSort]
+        request.sortDescriptors = [latDeltaSort, lonDeltaSort, latSort, lonSort]
         
         let moc = stack.context
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
@@ -98,7 +97,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     {
         DispatchQueue.main.async
         {
-            var x = CurrentMapView(latDelta: self.mapView.region.span.latitudeDelta, lonDelta: self.mapView.region.span.longitudeDelta, lat: self.mapView.centerCoordinate.latitude, lon: self.mapView.centerCoordinate.longitude, context: self.stack.context)
+            let x = CurrentMapView(latDelta: self.mapView.region.span.latitudeDelta, lonDelta: self.mapView.region.span.longitudeDelta, lat: self.mapView.centerCoordinate.latitude, lon: self.mapView.centerCoordinate.longitude, context: self.stack.context)
             
             print(x.latitude, x.longitude)
             
@@ -112,7 +111,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             {
                 
                 let fr = self.fetchedResultsController.fetchedObjects?[(self.fetchedResultsController.fetchedObjects?.count)! - 1] as! CurrentMapView
-                print(self.fetchedResultsController.fetchedObjects?.count)
+                print(Int((self.fetchedResultsController.fetchedObjects?.count)!))
                 let latitude: CLLocationDegrees = fr.latitude
                 let longitude: CLLocationDegrees = fr.longitude
                 let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)

@@ -20,5 +20,4 @@ extension CurrentMapView {
     @NSManaged public var longitudeDelta: Double
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
-    @NSManaged public var creationDate: Date
 }
