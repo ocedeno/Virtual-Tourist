@@ -16,9 +16,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     @IBOutlet weak var mapView: MKMapView!
     
     //Variables/Constants
-    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     var fetchedAnnotationsResultsController: NSFetchedResultsController<NSFetchRequestResult>!
-    var annotations = [MKPointAnnotation]()
+    var annotations = [MKAnnotation]()
+    var currentMV: CurrentMapView?
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var stack: CoreDataStack!
     
@@ -29,55 +29,36 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         // Get the stack
         stack = delegate.stack
-        
-        initializeFetchedResultsController()
         initializeAnnotationFetchedResultsController()
         
         //Hide Nav Bar
         self.navigationController?.navigationBar.isHidden = true
         
+        //Check for Initial MapView Coordinates
+        let fr = NSFetchRequest<CurrentMapView>(entityName: "CurrentMapView")
+        
+        if delegate.checkIfFirstLaunch()
+        {
+            currentMV = try! stack.context.fetch(fr)[0]
+            setMapView()
+            getAnnotationsArray()
+        }else
+        {
+            currentMV = CurrentMapView(latDelta: self.mapView.region.span.latitudeDelta, lonDelta: self.mapView.region.span.longitudeDelta, lat: self.mapView.centerCoordinate.latitude, lon: self.mapView.centerCoordinate.longitude, context: self.stack.context)
+        }
+        
         //MapView Setup
         mapView.delegate = self
+        mapView.addAnnotations(annotations)
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation))
         mapView.addGestureRecognizer(longPressRecognizer)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-        if fetchedResultsController.fetchedObjects?.count != 0
-        {
-            setMapView()
-        }
-    }
-    
-    //MARK:Core Data
-    func initializeFetchedResultsController()
-    {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrentMapView")
-        let latDeltaSort = NSSortDescriptor(key: "latitudeDelta", ascending: false)
-        let lonDeltaSort = NSSortDescriptor(key: "longitudeDelta", ascending: false)
-        let latSort = NSSortDescriptor(key: "latitude", ascending: false)
-        let lonSort = NSSortDescriptor(key: "longitude", ascending: false)
-        request.sortDescriptors = [latDeltaSort, lonDeltaSort, latSort, lonSort]
-        
-        let moc = stack.context
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = self
-        
-        do {
-            try fetchedResultsController.performFetch()
-            print("Successful initialized CurrentMapView FetchedResultsController")
-        } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
-        }
-    }
-    
     func initializeAnnotationFetchedResultsController()
     {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Annotations")
-        let latSort = NSSortDescriptor(key: "latitude", ascending: false)
+        let latSort = NSSortDescriptor(key: "latitude", ascending: true)
         let lonSort = NSSortDescriptor(key: "longitude", ascending: false)
         request.sortDescriptors = [latSort, lonSort]
         
@@ -87,43 +68,51 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         do {
             try fetchedAnnotationsResultsController.performFetch()
-            print("Successful initialized Annotation FetchedResultsController")
         } catch {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
     }
     
+    func getAnnotationsArray()
+    {
+        let far = fetchedAnnotationsResultsController
+        for object in far?.fetchedObjects as! [Annotations]
+        {
+            let annotation = MKPointAnnotation()
+            let latitude = object.latitude
+            let longitude = object.longitude
+            let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            annotation.coordinate = coordinates
+            annotation.title = "Select to see Photos!"
+            annotations.append(annotation)
+        }
+    }
+    
     func getCurrentMapView()
     {
-        DispatchQueue.main.async
-        {
-            let x = CurrentMapView(latDelta: self.mapView.region.span.latitudeDelta, lonDelta: self.mapView.region.span.longitudeDelta, lat: self.mapView.centerCoordinate.latitude, lon: self.mapView.centerCoordinate.longitude, context: self.stack.context)
-            
-            print(x.latitude, x.longitude)
-            
-            self.stack.save()
-        }
+        stack.context.delete(currentMV!)
+        currentMV = CurrentMapView(latDelta: self.mapView.region.span.latitudeDelta, lonDelta: self.mapView.region.span.longitudeDelta, lat: self.mapView.centerCoordinate.latitude, lon: self.mapView.centerCoordinate.longitude, context: self.stack.context)
+        
+        self.stack.save()
     }
     
     func setMapView()
     {
-        DispatchQueue.main.async
-            {
-                
-                let fr = self.fetchedResultsController.fetchedObjects?[(self.fetchedResultsController.fetchedObjects?.count)! - 1] as! CurrentMapView
-                print(Int((self.fetchedResultsController.fetchedObjects?.count)!))
-                let latitude: CLLocationDegrees = fr.latitude
-                let longitude: CLLocationDegrees = fr.longitude
-                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                var span = MKCoordinateSpan()
-                span.latitudeDelta = fr.latitudeDelta
-                span.longitudeDelta = fr.longitudeDelta
-                var region = MKCoordinateRegion()
-                region.span = span
-                self.mapView.setRegion(region, animated: true)
-                self.mapView.setCenter(coordinate, animated: true)
-                print(fr.latitude, fr.longitude)
-        }
+        let fr = currentMV!
+        
+        let latitude: CLLocationDegrees = fr.latitude
+        let longitude: CLLocationDegrees = fr.longitude
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        var span = MKCoordinateSpan()
+        span.latitudeDelta = fr.latitudeDelta
+        span.longitudeDelta = fr.longitudeDelta
+        
+        var region = MKCoordinateRegion()
+        region.span = span
+        
+        self.mapView.setRegion(region, animated: true)
+        self.mapView.setCenter(coordinate, animated: true)
     }
     
     //MARK: Helper Functions
@@ -133,12 +122,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         {
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            _ = Annotations(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, context: stack.context)
             let annotation = MKPointAnnotation()
             annotation.title = "Select to see Photos!"
             annotation.coordinate = newCoordinates
             annotations.append(annotation)
-            
-            let _ = Annotations(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude, context: stack.context)
         }
         
         mapView.addAnnotations(annotations)
@@ -147,7 +135,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     //MARK: Map Class Methods
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl)
     {
-        initializeFetchedResultsController()
         getCurrentMapView()
         let photoAlbumVC = storyboard?.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as? PhotoAlbumViewController
         self.navigationController?.pushViewController(photoAlbumVC!, animated: true)
