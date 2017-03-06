@@ -11,34 +11,22 @@ import CoreData
 
 class FlickrClient
 {
-    let methodParameters =
-    [
-        FlickrConstants.FlickrParameterKeys.Method: FlickrConstants.FlickrParameterValues.SearchMethod,
-        FlickrConstants.FlickrParameterKeys.APIKey: FlickrConstants.FlickrParameterValues.APIKey,
-        //FlickrConstants.FlickrParameterKeys.BoundingBox: bboxString(),
-        FlickrConstants.FlickrParameterKeys.SafeSearch: FlickrConstants.FlickrParameterValues.UseSafeSearch,
-        FlickrConstants.FlickrParameterKeys.Extras: FlickrConstants.FlickrParameterValues.MediumURL,
-        FlickrConstants.FlickrParameterKeys.Format: FlickrConstants.FlickrParameterValues.ResponseFormat,
-        FlickrConstants.FlickrParameterKeys.NoJSONCallback: FlickrConstants.FlickrParameterValues.DisableJSONCallback
-    ]
-    
-    /*private func bboxString() -> String
+    func getMethodParameters(latitude: Double, longitude: Double) -> [String: String]
     {
-        // ensure bbox is bounded by minimum and maximums
-        if let latitude = Double(latitudeTextField.text!), let longitude = Double(longitudeTextField.text!)
-        {
-            let minimumLon = max(longitude - FlickrConstants.Flickr.SearchBBoxHalfWidth, FlickrConstants.Flickr.SearchLonRange.0)
-            let minimumLat = max(latitude - FlickrConstants.Flickr.SearchBBoxHalfHeight, FlickrConstants.Flickr.SearchLatRange.0)
-            let maximumLon = min(longitude + FlickrConstants.Flickr.SearchBBoxHalfWidth, FlickrConstants.Flickr.SearchLonRange.1)
-            let maximumLat = min(latitude + FlickrConstants.Flickr.SearchBBoxHalfHeight, FlickrConstants.Flickr.SearchLatRange.1)
-            return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
-        }else
-        {
-            return "0,0,0,0"
-        }
+        
+        return
+        [
+            FlickrConstants.FlickrParameterKeys.Method: FlickrConstants.FlickrParameterValues.SearchMethod,
+            FlickrConstants.FlickrParameterKeys.APIKey: FlickrConstants.FlickrParameterValues.APIKey,
+            FlickrConstants.FlickrParameterKeys.BoundingBox: MapViewController.sharedInstance().bboxString(latitude: latitude, longitude: longitude),
+            FlickrConstants.FlickrParameterKeys.SafeSearch: FlickrConstants.FlickrParameterValues.UseSafeSearch,
+            FlickrConstants.FlickrParameterKeys.Extras: FlickrConstants.FlickrParameterValues.MediumURL,
+            FlickrConstants.FlickrParameterKeys.Format: FlickrConstants.FlickrParameterValues.ResponseFormat,
+            FlickrConstants.FlickrParameterKeys.NoJSONCallback: FlickrConstants.FlickrParameterValues.DisableJSONCallback
+        ]
     }
-    */
-    private func displayImages(_ methodParameters: [String: AnyObject], withPageNumber: Int)
+    
+    func getImages(_ methodParameters: [String: AnyObject], withPageNumber: Int)
     {
         //Adding Page to Method's Parameters
         var methodParametersWithPageNumber = methodParameters
@@ -48,7 +36,7 @@ class FlickrClient
         let session = URLSession.shared
         let request = URLRequest(url: flickrURLFromParameters(parameters: methodParametersWithPageNumber))
         
-        //Create a Network Request 
+        //Create a Network Request
         let task = session.dataTask(with: request)
         { (data, response, error) in
             
@@ -101,30 +89,10 @@ class FlickrClient
                 return
             }
             
-            if photosArray.count == 0
-            {
-                print("No Photos Found. Search again.")
-            } else
-            {
-                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
-                let photoDictionary = photosArray[randomPhotoIndex] as [String: AnyObject]
-                
-                //Does the photo have a key for 'url_m'?
-                guard let imageURLString = photoDictionary[FlickrConstants.FlickrResponseKeys.MediumURL] as? String else
-                {
-                    print("Cannot find key '\(FlickrConstants.FlickrResponseKeys.MediumURL)' in \(photoDictionary)")
-                    return
-                }
-                
-                let imageURL = URL(fileURLWithPath: imageURLString)
-                guard let imageData = try? Data(contentsOf: imageURL) else
-                {
-                    print("Image does not exist at '\(imageURL)'")
-                    return
-                }
-                
-                print(imageData)
-                
+            //WHAT DO I DO WITH PHOTOSARRAY
+            let mapVC = MapViewController.sharedInstance()
+            DispatchQueue.main.async {
+                mapVC.performSegue(withIdentifier: "photoAlbumSegue", sender: photosArray)
             }
         }
         

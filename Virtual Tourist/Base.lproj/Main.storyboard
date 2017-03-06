@@ -39,6 +39,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="8Vc-6g-gLB" id="Ynh-Qp-zEt"/>
+                        <segue destination="61p-cs-QYQ" kind="show" identifier="photoAlbumSegue" id="zPj-cb-ySk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

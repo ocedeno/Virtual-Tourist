@@ -12,10 +12,11 @@ import CoreData
 
 class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
 {
-
+    
     //IBOutlets:
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var flickrCollectionView: UICollectionView!
+    var photosArray: [[String:AnyObject]]?
     
     //Life Cycle:
     override func viewDidLoad()
@@ -31,12 +32,11 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         return 4
     }
     
-    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell = flickrCollectionView.dequeueReusableCell(withReuseIdentifier: "flickrCell", for: indexPath) as UICollectionViewCell
         cell.backgroundColor = UIColor.black
         
         return cell
     }
-    
 }

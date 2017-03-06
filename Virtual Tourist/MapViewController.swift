@@ -16,11 +16,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     @IBOutlet weak var mapView: MKMapView!
     
     //Variables/Constants
+    let delegate = UIApplication.shared.delegate as! AppDelegate
     var fetchedAnnotationsResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     var annotations = [MKAnnotation]()
     var currentMV: CurrentMapView?
-    let delegate = UIApplication.shared.delegate as! AppDelegate
     var stack: CoreDataStack!
+    var selectedPinLatitude: CLLocationDegrees?
+    var selectedPinLongitude: CLLocationDegrees?
+    var photosArray: [[String: AnyObject]]?
     
     //MARK: Life Cycle:
     override func viewDidLoad()
@@ -30,9 +33,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         // Get the stack
         stack = delegate.stack
         initializeAnnotationFetchedResultsController()
-        
-        //Hide Nav Bar
-        self.navigationController?.navigationBar.isHidden = true
         
         //Check for Initial MapView Coordinates
         let fr = NSFetchRequest<CurrentMapView>(entityName: "CurrentMapView")
@@ -53,6 +53,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation))
         mapView.addGestureRecognizer(longPressRecognizer)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        //Hide Nav Bar
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     func initializeAnnotationFetchedResultsController()
@@ -127,17 +134,32 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             annotation.title = "Select to see Photos!"
             annotation.coordinate = newCoordinates
             annotations.append(annotation)
+            sendPhotosArray(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
         }
         
         mapView.addAnnotations(annotations)
     }
     
+    func sendPhotosArray (latitude: Double, longitude: Double)
+    {
+        let flickrClient = FlickrClient()
+        flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 1)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let photoAlbumVC = segue.destination as! PhotoAlbumViewController
+        photoAlbumVC.photosArray = sender as? [[String: AnyObject]]
+    }
+    
     //MARK: Map Class Methods
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl)
     {
+        selectedPinLatitude = view.annotation?.coordinate.latitude
+        selectedPinLongitude = view.annotation?.coordinate.longitude
         getCurrentMapView()
-        let photoAlbumVC = storyboard?.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as? PhotoAlbumViewController
-        self.navigationController?.pushViewController(photoAlbumVC!, animated: true)
+        sendPhotosArray(latitude: selectedPinLatitude!, longitude: selectedPinLongitude!)
+        performSegue(withIdentifier: "photoAlbumSegue", sender: nil)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
@@ -151,5 +173,29 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         }
         
         return annotationView
+    }
+    
+    func bboxString(latitude: Double, longitude: Double) -> String
+    {
+        if longitude == 0.0 {
+            
+            let minimumLon = max(longitude - FlickrConstants.Flickr.SearchBBoxHalfWidth, FlickrConstants.Flickr.SearchLonRange.0)
+            let minimumLat = max(latitude - FlickrConstants.Flickr.SearchBBoxHalfHeight, FlickrConstants.Flickr.SearchLatRange.0)
+            let maximumLon = min(longitude + FlickrConstants.Flickr.SearchBBoxHalfWidth, FlickrConstants.Flickr.SearchLonRange.1)
+            let maximumLat = min(latitude + FlickrConstants.Flickr.SearchBBoxHalfHeight, FlickrConstants.Flickr.SearchLatRange.1)
+            return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
+        } else {
+            return "0, 0, 0, 0"
+        }
+    }
+    
+    //MARK: Shared Instance
+    class func sharedInstance() -> MapViewController
+    {
+        struct Singleton
+        {
+            static var sharedInstance = MapViewController()
+        }
+        return Singleton.sharedInstance
     }
 }
