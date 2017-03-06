@@ -90,10 +90,7 @@ class FlickrClient
             }
             
             //WHAT DO I DO WITH PHOTOSARRAY
-            let mapVC = MapViewController.sharedInstance()
-            DispatchQueue.main.async {
-                mapVC.performSegue(withIdentifier: "photoAlbumSegue", sender: photosArray)
-            }
+            
         }
         
         //Start the task.

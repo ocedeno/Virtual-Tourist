@@ -40,7 +40,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         if delegate.checkIfFirstLaunch()
         {
             currentMV = try! stack.context.fetch(fr)[0]
-            setMapView()
+            setMapView(mapView: mapView)
             getAnnotationsArray()
         }else
         {
@@ -62,6 +62,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         self.navigationController?.navigationBar.isHidden = true
     }
     
+    //MARK: Initialize Annotations Fetched Results Controller 
     func initializeAnnotationFetchedResultsController()
     {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Annotations")
@@ -95,6 +96,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         }
     }
     
+    //MARK: Helper Functions
     func getCurrentMapView()
     {
         stack.context.delete(currentMV!)
@@ -103,7 +105,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         self.stack.save()
     }
     
-    func setMapView()
+    func setMapView(mapView: MKMapView)
     {
         let fr = currentMV!
         
@@ -118,11 +120,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         var region = MKCoordinateRegion()
         region.span = span
         
-        self.mapView.setRegion(region, animated: true)
-        self.mapView.setCenter(coordinate, animated: true)
+        mapView.setRegion(region, animated: true)
+        mapView.setCenter(coordinate, animated: true)
     }
     
-    //MARK: Helper Functions
     func addAnnotation(gestureRecognizer:UIGestureRecognizer)
     {
         if gestureRecognizer.state == UIGestureRecognizerState.began
@@ -137,6 +138,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             sendPhotosArray(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
         }
         
+        self.stack.save()
         mapView.addAnnotations(annotations)
     }
     
@@ -144,12 +146,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     {
         let flickrClient = FlickrClient()
         flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 1)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        let photoAlbumVC = segue.destination as! PhotoAlbumViewController
-        photoAlbumVC.photosArray = sender as? [[String: AnyObject]]
     }
     
     //MARK: Map Class Methods
@@ -175,6 +171,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         return annotationView
     }
     
+    //Flickr Helper Function
     func bboxString(latitude: Double, longitude: Double) -> String
     {
         if longitude == 0.0 {
