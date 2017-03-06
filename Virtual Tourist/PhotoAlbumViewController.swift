@@ -16,6 +16,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     //IBOutlets:
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var flickrCollectionView: UICollectionView!
+    @IBOutlet weak var flickrPhotoView: UIImageView!
 
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var photosArray: [Photo]?
@@ -43,13 +44,32 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return 8
+        return Int((sentAnnotation.photo?.count)!)
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
-        let cell = flickrCollectionView.dequeueReusableCell(withReuseIdentifier: "flickrCell", for: indexPath) as UICollectionViewCell
+        let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        let paddingSpace = (collectionViewLayout?.sectionInset.left)! + (1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / 5
+        collectionViewLayout?.sectionInset.left = 10.0
+        collectionViewLayout?.sectionInset.right = 10.0
+        
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "flickrCell",for: indexPath) as! FlickrPhotoCell
+        
+        let photo = sentAnnotation.photo?.allObjects[indexPath.row] as! Photo
+        let imageString = photo.imageData!
+        let imageURL = URL(string: imageString)
+        let imageData = try? Data(contentsOf: imageURL!)
+        cell.flickrImageView.image = UIImage(data: imageData!)
         cell.backgroundColor = UIColor.black
+
         
         return cell
     }

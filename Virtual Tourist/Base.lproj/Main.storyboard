@@ -77,13 +77,27 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="flickrCell" reuseIdentifier="flickrCell" id="d5a-IZ-9Og">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="flickrCell" reuseIdentifier="flickrCell" id="d5a-IZ-9Og" customClass="FlickrPhotoCell" customModule="Virtual_Tourist" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="89" height="79"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="89" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B7v-pr-CJE">
+                                                            <rect key="frame" x="0.0" y="0.0" width="89" height="79"/>
+                                                        </imageView>
+                                                    </subviews>
                                                 </view>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="B7v-pr-CJE" secondAttribute="bottom" id="7ID-VC-R3d"/>
+                                                    <constraint firstAttribute="trailing" secondItem="B7v-pr-CJE" secondAttribute="trailing" id="exK-Ly-B5O"/>
+                                                    <constraint firstItem="B7v-pr-CJE" firstAttribute="leading" secondItem="d5a-IZ-9Og" secondAttribute="leading" id="lEN-Th-oiM"/>
+                                                    <constraint firstItem="B7v-pr-CJE" firstAttribute="top" secondItem="d5a-IZ-9Og" secondAttribute="top" id="v67-3r-BTe"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="flickrImageView" destination="B7v-pr-CJE" id="uDI-67-Gin"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>

@@ -7,9 +7,11 @@
 //
 
 import Foundation
-import MapKit
+import UIKit
 
 
-class MapClient
+class FlickrPhotoCell: UICollectionViewCell
 {
+    @IBOutlet weak var flickrImageView: UIImageView!
+    
 }
