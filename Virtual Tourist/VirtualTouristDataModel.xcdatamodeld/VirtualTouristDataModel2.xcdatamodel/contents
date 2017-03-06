@@ -12,7 +12,7 @@
         <attribute name="longitudeDelta" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Photo" representedClassName="Photo" syncable="YES">
-        <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="imageData" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="annotations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Annotations" inverseName="photo" inverseEntity="Annotations" syncable="YES"/>
     </entity>
     <elements>

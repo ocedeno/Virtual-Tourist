@@ -12,7 +12,7 @@ import CoreData
 @objc(Photo)
 public class Photo: NSManagedObject
 {
-    convenience init(imageData: Data?, context: NSManagedObjectContext)
+    convenience init(imageData: String?, context: NSManagedObjectContext)
     {
         if let ent = NSEntityDescription.entity(forEntityName: "Photo", in: context)
         {

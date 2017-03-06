@@ -16,7 +16,7 @@ extension Photo {
         return NSFetchRequest<Photo>(entityName: "Photo");
     }
 
-    @NSManaged public var imageData: Data?
+    @NSManaged public var imageData: String?
     @NSManaged public var annotations: Annotations?
 
 }

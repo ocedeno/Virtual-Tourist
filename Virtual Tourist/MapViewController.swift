@@ -19,6 +19,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var fetchedAnnotationsResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     var annotations = [MKAnnotation]()
+    var newAnnotation: Annotations!
     var currentMV: CurrentMapView?
     var stack: CoreDataStack!
     var selectedPinLatitude: CLLocationDegrees?
@@ -67,8 +68,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Annotations")
         let latSort = NSSortDescriptor(key: "latitude", ascending: true)
-        let lonSort = NSSortDescriptor(key: "longitude", ascending: false)
-        request.sortDescriptors = [latSort, lonSort]
+        request.sortDescriptors = [latSort]
         
         let moc = stack.context
         fetchedAnnotationsResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
@@ -130,22 +130,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         {
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-            _ = Annotations(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, context: stack.context)
+            newAnnotation = Annotations(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, context: stack.context)
             let annotation = MKPointAnnotation()
             annotation.title = "Select to see Photos!"
             annotation.coordinate = newCoordinates
             annotations.append(annotation)
-            sendPhotosArray(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
+            createPhotosArray(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, annotation: newAnnotation)
         }
         
         self.stack.save()
         mapView.addAnnotations(annotations)
     }
     
-    func sendPhotosArray (latitude: Double, longitude: Double)
+    func createPhotosArray(latitude: Double, longitude: Double, annotation: Annotations)
     {
         let flickrClient = FlickrClient()
-        flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 1)
+        flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 1, annotation: annotation)
     }
     
     //MARK: Map Class Methods
@@ -154,8 +154,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         selectedPinLatitude = view.annotation?.coordinate.latitude
         selectedPinLongitude = view.annotation?.coordinate.longitude
         getCurrentMapView()
-        sendPhotosArray(latitude: selectedPinLatitude!, longitude: selectedPinLongitude!)
-        performSegue(withIdentifier: "photoAlbumSegue", sender: nil)
+        //createPhotosArray(latitude: selectedPinLatitude!, longitude: selectedPinLongitude!)
+        performSegue(withIdentifier: "photoAlbumSegue", sender: newAnnotation)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let photoAlbumVC = segue.destination as! PhotoAlbumViewController
+        photoAlbumVC.sentAnnotation = sender as! Annotations
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?

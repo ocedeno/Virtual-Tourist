@@ -8,9 +8,13 @@
 
 import Foundation
 import CoreData
+import UIKit
 
-class FlickrClient
+class FlickrClient: NSObject, NSFetchedResultsControllerDelegate
 {
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    var stack: CoreDataStack!
+
     func getMethodParameters(latitude: Double, longitude: Double) -> [String: String]
     {
         
@@ -26,7 +30,7 @@ class FlickrClient
         ]
     }
     
-    func getImages(_ methodParameters: [String: AnyObject], withPageNumber: Int)
+    func getImages(_ methodParameters: [String: AnyObject], withPageNumber: Int, annotation: Annotations)
     {
         //Adding Page to Method's Parameters
         var methodParametersWithPageNumber = methodParameters
@@ -89,8 +93,14 @@ class FlickrClient
                 return
             }
             
-            //WHAT DO I DO WITH PHOTOSARRAY
-            
+            //Create an Array of Medium URLs from JSON Return
+            for i in photosArray
+            {
+                let mURL = i["url_m"] as! String
+                self.stack = self.delegate.stack
+                let newPhoto = Photo(imageData: mURL, context: self.stack.context)
+                annotation.addToPhoto(newPhoto)
+            }
         }
         
         //Start the task.

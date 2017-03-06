@@ -18,7 +18,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var flickrCollectionView: UICollectionView!
 
     let delegate = UIApplication.shared.delegate as! AppDelegate
-    var photosArray: [[String:AnyObject]]?
+    var photosArray: [Photo]?
+    var sentAnnotation: Annotations!
     var currentMV: CurrentMapView?
     var stack: CoreDataStack!
     
@@ -35,12 +36,14 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         let fr = NSFetchRequest<CurrentMapView>(entityName: "CurrentMapView")
         currentMV = try! stack.context.fetch(fr)[0]
+        
         setPhotoAlbumMV()
+        print("Sent annotation is : \(sentAnnotation.description)")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return 4
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
