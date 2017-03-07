@@ -10,8 +10,8 @@ import UIKit
 
 // MARK: - Constants
 
-struct FlickrConstants {
-    
+struct FlickrConstants
+{
     // MARK: Flickr
     struct Flickr
     {
@@ -26,7 +26,8 @@ struct FlickrConstants {
     }
     
     // MARK: Flickr Parameter Keys
-    struct FlickrParameterKeys {
+    struct FlickrParameterKeys
+    {
         static let Method = "method"
         static let APIKey = "api_key"
         static let Extras = "extras"
@@ -38,7 +39,8 @@ struct FlickrConstants {
     }
     
     // MARK: Flickr Parameter Values
-    struct FlickrParameterValues {
+    struct FlickrParameterValues
+    {
         static let SearchMethod = "flickr.photos.search"
         static let APIKey = "8f254826530527a1a83d8e8bdf2568a7"
         static let ResponseFormat = "json"
@@ -49,7 +51,8 @@ struct FlickrConstants {
     }
     
     // MARK: Flickr Response Keys
-    struct FlickrResponseKeys {
+    struct FlickrResponseKeys
+    {
         static let Status = "stat"
         static let Photos = "photos"
         static let Photo = "photo"
@@ -59,7 +62,8 @@ struct FlickrConstants {
     }
     
     // MARK: Flickr Response Values
-    struct FlickrResponseValues {
+    struct FlickrResponseValues
+    {
         static let OKStatus = "ok"
     }
 }

@@ -12,9 +12,11 @@ import UIKit
 
 class FlickrClient: NSObject, NSFetchedResultsControllerDelegate
 {
+    //MARK: Variables/Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var stack: CoreDataStack!
 
+    //Creating a Dictionary of method Parameters
     func getMethodParameters(latitude: Double, longitude: Double) -> [String: String]
     {
         
@@ -30,6 +32,7 @@ class FlickrClient: NSObject, NSFetchedResultsControllerDelegate
         ]
     }
     
+    //Flickr API Request
     func getImages(_ methodParameters: [String: AnyObject], withPageNumber: Int, annotation: Annotations)
     {
         //Adding Page to Method's Parameters

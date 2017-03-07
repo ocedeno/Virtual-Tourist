@@ -13,5 +13,4 @@ import UIKit
 class FlickrPhotoCell: UICollectionViewCell
 {
     @IBOutlet weak var flickrImageView: UIImageView!
-    
 }

@@ -56,14 +56,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         mapView.addGestureRecognizer(longPressRecognizer)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(true)
         
         //Hide Nav Bar
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    //MARK: Initialize Annotations Fetched Results Controller 
+    //Initialize Annotations Fetched Results Controller
     func initializeAnnotationFetchedResultsController()
     {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Annotations")
@@ -148,6 +149,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 1, annotation: annotation)
     }
     
+    //Passing Annotation to Photo Album VC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let photoAlbumVC = segue.destination as! PhotoAlbumViewController
+        photoAlbumVC.sentAnnotation = sender as! Annotations
+    }
+    
     //MARK: Map Class Methods
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl)
     {
@@ -156,12 +164,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         getCurrentMapView()
         //createPhotosArray(latitude: selectedPinLatitude!, longitude: selectedPinLongitude!)
         performSegue(withIdentifier: "photoAlbumSegue", sender: newAnnotation)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        let photoAlbumVC = segue.destination as! PhotoAlbumViewController
-        photoAlbumVC.sentAnnotation = sender as! Annotations
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?

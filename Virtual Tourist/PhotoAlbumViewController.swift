@@ -12,19 +12,19 @@ import CoreData
 
 class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, NSFetchedResultsControllerDelegate
 {
-    
-    //IBOutlets:
+    //MARK: IBOutlets:
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var flickrCollectionView: UICollectionView!
     @IBOutlet weak var flickrPhotoView: UIImageView!
 
+    //Variables/Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var photosArray: [Photo]?
     var sentAnnotation: Annotations!
     var currentMV: CurrentMapView?
     var stack: CoreDataStack!
     
-    //Life Cycle:
+    //MARK: Life Cycle:
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -39,9 +39,34 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         currentMV = try! stack.context.fetch(fr)[0]
         
         setPhotoAlbumMV()
-        print("Sent annotation is : \(sentAnnotation.description)")
+        mapView.isUserInteractionEnabled = false
     }
     
+    //MARK: Setting MapView Coordinates
+    func setPhotoAlbumMV()
+    {
+        let fr = currentMV!
+        
+        let latitude: CLLocationDegrees = fr.latitude
+        let longitude: CLLocationDegrees = fr.longitude
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        var span = MKCoordinateSpan()
+        span.latitudeDelta = fr.latitudeDelta
+        span.longitudeDelta = fr.longitudeDelta
+        
+        var region = MKCoordinateRegion()
+        region.span = span
+        
+        self.mapView.setRegion(region, animated: true)
+        self.mapView.setCenter(coordinate, animated: true)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+    }
+    
+    //MARK: Collection View Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         return Int((sentAnnotation.photo?.count)!)
@@ -72,28 +97,5 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
 
         
         return cell
-    }
-    
-    func setPhotoAlbumMV()
-    {
-        let fr = currentMV!
-        
-        let latitude: CLLocationDegrees = fr.latitude
-        let longitude: CLLocationDegrees = fr.longitude
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        
-        var span = MKCoordinateSpan()
-        span.latitudeDelta = fr.latitudeDelta
-        span.longitudeDelta = fr.longitudeDelta
-        
-        var region = MKCoordinateRegion()
-        region.span = span
-        
-        self.mapView.setRegion(region, animated: true)
-        self.mapView.setCenter(coordinate, animated: true)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
     }
 }
