@@ -87,9 +87,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     func getAnnotationsArray()
     {
         let far = fetchedAnnotationsResultsController
+        
         for object in far?.fetchedObjects as! [Annotations]
         {
-            let annotation = MKPointAnnotation()
+            let annotation = MyPointAnnotation()
+            annotation.annotations = object
             let latitude = object.latitude
             let longitude = object.longitude
             let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -97,6 +99,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             annotation.title = "Select to see Photos!"
             annotations.append(annotation)
         }
+    }
+    
+    func addAnnotation(gestureRecognizer:UIGestureRecognizer)
+    {
+        if gestureRecognizer.state == UIGestureRecognizerState.began
+        {
+            let touchPoint = gestureRecognizer.location(in: mapView)
+            let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            newAnnotation = Annotations(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, context: stack.context)
+            let annotation = MyPointAnnotation()
+            annotation.title = "Select to see Photos!"
+            annotation.coordinate = newCoordinates
+            annotations.append(annotation)
+            annotation.annotations = newAnnotation
+            createPhotosArray(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, annotation: newAnnotation)
+        }
+        
+        self.stack.save()
+        mapView.addAnnotations(annotations)
     }
     
     //MARK: Helper Functions
@@ -127,24 +148,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         mapView.setCenter(coordinate, animated: true)
     }
     
-    func addAnnotation(gestureRecognizer:UIGestureRecognizer)
-    {
-        if gestureRecognizer.state == UIGestureRecognizerState.began
-        {
-            let touchPoint = gestureRecognizer.location(in: mapView)
-            let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-            newAnnotation = Annotations(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, context: stack.context)
-            let annotation = MKPointAnnotation()
-            annotation.title = "Select to see Photos!"
-            annotation.coordinate = newCoordinates
-            annotations.append(annotation)
-            createPhotosArray(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, annotation: newAnnotation)
-        }
-        
-        self.stack.save()
-        mapView.addAnnotations(annotations)
-    }
-    
     func createPhotosArray(latitude: Double, longitude: Double, annotation: Annotations)
     {
         let flickrClient = FlickrClient()
@@ -166,8 +169,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         selectedPinLatitude = view.annotation?.coordinate.latitude
         selectedPinLongitude = view.annotation?.coordinate.longitude
         getCurrentMapView()
-        //createPhotosArray(latitude: selectedPinLatitude!, longitude: selectedPinLongitude!)
-        performSegue(withIdentifier: "photoAlbumSegue", sender: newAnnotation)
+        let sentAnnotation = view.annotation as! MyPointAnnotation
+        performSegue(withIdentifier: "photoAlbumSegue", sender: sentAnnotation.annotations)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
@@ -186,7 +189,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     //Flickr Helper Function
     func bboxString(latitude: Double, longitude: Double) -> String
     {
-        if longitude == 0.0 {
+        if longitude != 0.0 {
             
             let minimumLon = max(longitude - FlickrConstants.Flickr.SearchBBoxHalfWidth, FlickrConstants.Flickr.SearchLonRange.0)
             let minimumLat = max(latitude - FlickrConstants.Flickr.SearchBBoxHalfHeight, FlickrConstants.Flickr.SearchLatRange.0)

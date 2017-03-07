@@ -61,7 +61,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         self.mapView.setRegion(region, animated: true)
         self.mapView.setCenter(coordinate, animated: true)
         
-        let annotation = MKPointAnnotation()
+        let annotation = MyPointAnnotation()
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
     }

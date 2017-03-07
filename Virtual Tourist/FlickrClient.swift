@@ -15,20 +15,19 @@ class FlickrClient: NSObject, NSFetchedResultsControllerDelegate
     //MARK: Variables/Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var stack: CoreDataStack!
-
+    
     //Creating a Dictionary of method Parameters
     func getMethodParameters(latitude: Double, longitude: Double) -> [String: String]
     {
-        
         return
-        [
-            FlickrConstants.FlickrParameterKeys.Method: FlickrConstants.FlickrParameterValues.SearchMethod,
-            FlickrConstants.FlickrParameterKeys.APIKey: FlickrConstants.FlickrParameterValues.APIKey,
-            FlickrConstants.FlickrParameterKeys.BoundingBox: MapViewController.sharedInstance().bboxString(latitude: latitude, longitude: longitude),
-            FlickrConstants.FlickrParameterKeys.SafeSearch: FlickrConstants.FlickrParameterValues.UseSafeSearch,
-            FlickrConstants.FlickrParameterKeys.Extras: FlickrConstants.FlickrParameterValues.MediumURL,
-            FlickrConstants.FlickrParameterKeys.Format: FlickrConstants.FlickrParameterValues.ResponseFormat,
-            FlickrConstants.FlickrParameterKeys.NoJSONCallback: FlickrConstants.FlickrParameterValues.DisableJSONCallback
+            [
+                FlickrConstants.FlickrParameterKeys.Method: FlickrConstants.FlickrParameterValues.SearchMethod,
+                FlickrConstants.FlickrParameterKeys.APIKey: FlickrConstants.FlickrParameterValues.APIKey,
+                FlickrConstants.FlickrParameterKeys.BoundingBox: MapViewController.sharedInstance().bboxString(latitude: latitude, longitude: longitude),
+                FlickrConstants.FlickrParameterKeys.SafeSearch: FlickrConstants.FlickrParameterValues.UseSafeSearch,
+                FlickrConstants.FlickrParameterKeys.Extras: FlickrConstants.FlickrParameterValues.MediumURL,
+                FlickrConstants.FlickrParameterKeys.Format: FlickrConstants.FlickrParameterValues.ResponseFormat,
+                FlickrConstants.FlickrParameterKeys.NoJSONCallback: FlickrConstants.FlickrParameterValues.DisableJSONCallback
         ]
     }
     
@@ -96,7 +95,7 @@ class FlickrClient: NSObject, NSFetchedResultsControllerDelegate
                 return
             }
             
-            //Create an Array of Medium URLs from JSON Return
+            //Add photos to the Annotation Entity
             for i in photosArray
             {
                 let mURL = i["url_m"] as! String
@@ -105,7 +104,6 @@ class FlickrClient: NSObject, NSFetchedResultsControllerDelegate
                 annotation.addToPhoto(newPhoto)
             }
         }
-        
         //Start the task.
         task.resume()
     }

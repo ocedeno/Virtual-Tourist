@@ -13,6 +13,7 @@
 		064D768B1E649DE5008495CA /* CurrentMapView+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064D76851E649DE5008495CA /* CurrentMapView+CoreDataProperties.swift */; };
 		064D768C1E649DE5008495CA /* Annotations+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064D76861E649DE5008495CA /* Annotations+CoreDataClass.swift */; };
 		064D768D1E649DE5008495CA /* Annotations+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064D76871E649DE5008495CA /* Annotations+CoreDataProperties.swift */; };
+		06735F1B1E6F03B800995163 /* MyPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06735F1A1E6F03B800995163 /* MyPointAnnotation.swift */; };
 		06946F8A1E606F1500848DAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06946F891E606F1500848DAB /* AppDelegate.swift */; };
 		06946F8F1E606F1500848DAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06946F8D1E606F1500848DAB /* Main.storyboard */; };
 		06946F911E606F1500848DAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06946F901E606F1500848DAB /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 		064D76851E649DE5008495CA /* CurrentMapView+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CurrentMapView+CoreDataProperties.swift"; path = "../CurrentMapView+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		064D76861E649DE5008495CA /* Annotations+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Annotations+CoreDataClass.swift"; path = "../Annotations+CoreDataClass.swift"; sourceTree = "<group>"; };
 		064D76871E649DE5008495CA /* Annotations+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Annotations+CoreDataProperties.swift"; path = "../Annotations+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		06735F1A1E6F03B800995163 /* MyPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointAnnotation.swift; sourceTree = "<group>"; };
 		06946F861E606F1500848DAB /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		06946F891E606F1500848DAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06946F8E1E606F1500848DAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				06946FC71E60DD8E00848DAB /* Flickr */,
 				06946FCF1E64975C00848DAB /* Core Data */,
 				06946FCE1E64973500848DAB /* PhotoAlbum */,
+				06735F1A1E6F03B800995163 /* MyPointAnnotation.swift */,
 			);
 			name = Client;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06735F1B1E6F03B800995163 /* MyPointAnnotation.swift in Sources */,
 				06946FCD1E647D9900848DAB /* FlickrPhotoCell.swift in Sources */,
 				06946F8A1E606F1500848DAB /* AppDelegate.swift in Sources */,
 				06946FC11E607A0C00848DAB /* PhotoAlbumViewController.swift in Sources */,
