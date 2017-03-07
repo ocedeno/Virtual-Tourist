@@ -47,8 +47,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     {
         let fr = currentMV!
         
-        let latitude: CLLocationDegrees = fr.latitude
-        let longitude: CLLocationDegrees = fr.longitude
+        let latitude: CLLocationDegrees = sentAnnotation.latitude
+        let longitude: CLLocationDegrees = sentAnnotation.longitude
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         
         var span = MKCoordinateSpan()
