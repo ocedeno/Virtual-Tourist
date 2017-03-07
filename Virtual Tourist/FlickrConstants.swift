@@ -35,7 +35,7 @@ struct FlickrConstants
         static let NoJSONCallback = "nojsoncallback"
         static let SafeSearch = "safe_search"
         static let BoundingBox = "bbox"
-        static let Page = "page"
+        static let Page = "per_page"
     }
     
     // MARK: Flickr Parameter Values

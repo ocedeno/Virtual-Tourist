@@ -151,7 +151,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     func createPhotosArray(latitude: Double, longitude: Double, annotation: Annotations)
     {
         let flickrClient = FlickrClient()
-        flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 1, annotation: annotation)
+        flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 51, annotation: annotation)
     }
     
     //MARK: Segue

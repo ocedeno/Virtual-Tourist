@@ -191,8 +191,7 @@
 			children = (
 				06946FC71E60DD8E00848DAB /* Flickr */,
 				06946FCF1E64975C00848DAB /* Core Data */,
-				06946FCE1E64973500848DAB /* PhotoAlbum */,
-				06735F1A1E6F03B800995163 /* MyPointAnnotation.swift */,
+				06946FCE1E64973500848DAB /* Utility */,
 			);
 			name = Client;
 			sourceTree = "<group>";
@@ -206,12 +205,13 @@
 			name = Flickr;
 			sourceTree = "<group>";
 		};
-		06946FCE1E64973500848DAB /* PhotoAlbum */ = {
+		06946FCE1E64973500848DAB /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				06735F1A1E6F03B800995163 /* MyPointAnnotation.swift */,
 				06946FCC1E647D9900848DAB /* FlickrPhotoCell.swift */,
 			);
-			name = PhotoAlbum;
+			name = Utility;
 			sourceTree = "<group>";
 		};
 		06946FCF1E64975C00848DAB /* Core Data */ = {
