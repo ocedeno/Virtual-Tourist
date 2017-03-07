@@ -75,9 +75,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        let paddingSpace = (collectionViewLayout?.sectionInset.left)! + (1)
-        let availableWidth = view.frame.width - paddingSpace
-        let widthPerItem = availableWidth / 5
+        let availableWidth = view.frame.width + 1
+        let widthPerItem = availableWidth / 4
         collectionViewLayout?.sectionInset.left = 10.0
         collectionViewLayout?.sectionInset.right = 10.0
         
@@ -95,7 +94,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         cell.flickrImageView.image = UIImage(data: imageData!)
         cell.backgroundColor = UIColor.black
 
-        
         return cell
     }
 }

@@ -64,6 +64,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         self.navigationController?.navigationBar.isHidden = true
     }
     
+    //MARK:Annotation Methods
+    
     //Initialize Annotations Fetched Results Controller
     func initializeAnnotationFetchedResultsController()
     {
@@ -148,6 +150,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         let flickrClient = FlickrClient()
         flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 1, annotation: annotation)
     }
+    
+    //MARK: Segue
     
     //Passing Annotation to Photo Album VC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
