@@ -162,7 +162,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     
     func hideDirectionsLabel()
     {
-        let when = DispatchTime.now() + 5 // change 2 to desired number of seconds
+        let when = DispatchTime.now() + 5
         DispatchQueue.main.asyncAfter(deadline: when)
         {
             self.directionsLabel.isHidden = true
@@ -196,6 +196,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pinView")
             annotationView!.canShowCallout = true
             annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            annotationView!.isDraggable = true
         }
         
         return annotationView
