@@ -9,11 +9,13 @@
 import UIKit
 import MapKit
 import CoreData
+import SpriteKit
 
 class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate
 {
     //IBOutlets:
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var directionsLabel: UILabel!
     
     //Variables/Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -40,7 +42,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         if delegate.checkIfFirstLaunch()
         {
-            currentMV = try! stack.context.fetch(fr)[0]
+            currentMV = try? stack.context.fetch(fr)[0]
             setMapView(mapView: mapView)
             getAnnotationsArray()
         }else
@@ -51,7 +53,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         //MapView Setup
         mapView.delegate = self
         mapView.addAnnotations(annotations)
+        hideDirectionsLabel()
         
+        //Gesture Setup
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation))
         mapView.addGestureRecognizer(longPressRecognizer)
     }
@@ -121,6 +125,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     }
     
     //MARK: Helper Functions
+    
+    //Get current location of view.
     func getCurrentMapView()
     {
         stack.context.delete(currentMV!)
@@ -128,7 +134,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         self.stack.save()
     }
-    
+
     func setMapView(mapView: MKMapView)
     {
         let fr = currentMV!
@@ -152,6 +158,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     {
         let flickrClient = FlickrClient()
         flickrClient.getImages(flickrClient.getMethodParameters(latitude: latitude, longitude: longitude) as [String : AnyObject], withPageNumber: 51, annotation: annotation)
+    }
+    
+    func hideDirectionsLabel()
+    {
+        let when = DispatchTime.now() + 5 // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when)
+        {
+            self.directionsLabel.isHidden = true
+        }
     }
     
     //MARK: Segue

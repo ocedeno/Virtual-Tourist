@@ -25,26 +25,36 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8Vc-6g-gLB">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place and Select pin to see Flickr Photos!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zb-n0-D2O">
+                                <rect key="frame" x="84.5" y="61" width="206.5" height="41"/>
+                                <color key="backgroundColor" red="0.69051570595854916" green="0.69051570595854916" blue="0.69051570595854916" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="4zb-n0-D2O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JHY-Rc-mYu"/>
                             <constraint firstItem="8Vc-6g-gLB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="bbU-dU-piT"/>
                             <constraint firstItem="8Vc-6g-gLB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dTt-vg-AdV"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8Vc-6g-gLB" secondAttribute="baseline" id="k4r-Ad-KJv"/>
                             <constraint firstAttribute="trailing" secondItem="8Vc-6g-gLB" secondAttribute="trailing" id="oFN-g3-Uck"/>
+                            <constraint firstItem="4zb-n0-D2O" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="61" id="vX5-5f-OJa"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="whs-df-rfo"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="directionsLabel" destination="4zb-n0-D2O" id="9Rd-Lt-zai"/>
                         <outlet property="mapView" destination="8Vc-6g-gLB" id="Ynh-Qp-zEt"/>
                         <segue destination="61p-cs-QYQ" kind="show" identifier="photoAlbumSegue" id="zPj-cb-ySk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="873" y="90"/>
+            <point key="canvasLocation" x="872.79999999999995" y="89.505247376311857"/>
         </scene>
         <!--PhotoAlbumViewController-->
         <scene sceneID="f6L-F7-45p">
