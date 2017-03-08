@@ -9,7 +9,6 @@
 import UIKit
 import MapKit
 import CoreData
-import SpriteKit
 
 class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate
 {
@@ -111,13 +110,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         {
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-            newAnnotation = Annotations(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, context: stack.context)
             let annotation = MyPointAnnotation()
             annotation.title = "Select to see Photos!"
             annotation.coordinate = newCoordinates
-            annotations.append(annotation)
-            annotation.annotations = newAnnotation
-            createPhotosArray(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, annotation: newAnnotation)
+            stack.backgroundContext.perform
+                {
+                    self.newAnnotation = Annotations(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, context: self.stack.backgroundContext)
+                    self.createPhotosArray(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude, annotation: self.newAnnotation)
+                    annotation.annotations = self.newAnnotation
+                    self.annotations.append(annotation)
+            }
         }
         
         self.stack.save()
@@ -134,7 +136,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         self.stack.save()
     }
-
+    
     func setMapView(mapView: MKMapView)
     {
         let fr = currentMV!
@@ -175,7 +177,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         let photoAlbumVC = segue.destination as! PhotoAlbumViewController
-        photoAlbumVC.sentAnnotation = sender as! Annotations
+        photoAlbumVC.sentAnnotation = sender as! MyPointAnnotation
     }
     
     //MARK: Map Class Methods
@@ -185,7 +187,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         selectedPinLongitude = view.annotation?.coordinate.longitude
         getCurrentMapView()
         let sentAnnotation = view.annotation as! MyPointAnnotation
-        performSegue(withIdentifier: "photoAlbumSegue", sender: sentAnnotation.annotations)
+        performSegue(withIdentifier: "photoAlbumSegue", sender: sentAnnotation)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?

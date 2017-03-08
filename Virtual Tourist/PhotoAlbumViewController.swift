@@ -20,7 +20,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     //Variables/Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var photosArray: [Photo]?
-    var sentAnnotation: Annotations!
+    var sentAnnotation: MyPointAnnotation!
     var currentMV: CurrentMapView?
     var stack: CoreDataStack!
     
@@ -47,8 +47,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     {
         let fr = currentMV!
         
-        let latitude: CLLocationDegrees = sentAnnotation.latitude
-        let longitude: CLLocationDegrees = sentAnnotation.longitude
+        let latitude: CLLocationDegrees = (sentAnnotation.annotations?.latitude)!
+        let longitude: CLLocationDegrees = (sentAnnotation.annotations?.longitude)!
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         
         var span = MKCoordinateSpan()
@@ -69,7 +69,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     //MARK: Collection View Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return Int((sentAnnotation.photo?.count)!)
+        return Int((sentAnnotation.annotations?.photo?.count)!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
@@ -87,7 +87,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "flickrCell",for: indexPath) as! FlickrPhotoCell
         
-        let photo = sentAnnotation.photo?.allObjects[indexPath.row] as! Photo
+        let photo = sentAnnotation.annotations?.photo?.allObjects[indexPath.row] as! Photo
         let imageString = photo.imageData!
         let imageURL = URL(string: imageString)
         let imageData = try? Data(contentsOf: imageURL!)

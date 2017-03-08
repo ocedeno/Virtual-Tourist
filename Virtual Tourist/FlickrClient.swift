@@ -96,12 +96,15 @@ class FlickrClient: NSObject, NSFetchedResultsControllerDelegate
             }
             
             //Add photos to the Annotation Entity
+            self.stack = self.delegate.stack
+            self.stack.backgroundContext.perform {
             for i in photosArray
             {
                 let mURL = i["url_m"] as! String
-                self.stack = self.delegate.stack
-                let newPhoto = Photo(imageData: mURL, context: self.stack.context)
+                let newPhoto = Photo(imageData: mURL, context: self.stack.backgroundContext)
+                try! self.stack.backgroundContext.save()
                 annotation.addToPhoto(newPhoto)
+            }
             }
         }
         //Start the task.
