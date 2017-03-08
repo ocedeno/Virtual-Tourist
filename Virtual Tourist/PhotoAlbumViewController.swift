@@ -21,6 +21,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var photosArray: [Photo]?
     var sentAnnotation: MyPointAnnotation!
+    var annotationEntity: Annotations!
+
     var currentMV: CurrentMapView?
     var stack: CoreDataStack!
     
@@ -39,7 +41,30 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         currentMV = try! stack.context.fetch(fr)[0]
         
         setPhotoAlbumMV()
+        annotationEntity = sentAnnotation.annotations!
         mapView.isUserInteractionEnabled = false
+    }
+    
+    //MARK: IBActions:
+    @IBAction func newCollectionButton(_ sender: UIBarButtonItem)
+    {
+        removeOldData()
+        addNewData()
+    }
+    
+    func removeOldData()
+    {
+        let annotationEntity = sentAnnotation.annotations!
+        annotationEntity.removeFromPhoto(annotationEntity.photo!)
+        print("Removed Old Data")
+    }
+    
+    func addNewData()
+    {
+        let flickrClient = FlickrClient()
+        flickrClient.getImages(flickrClient.getMethodParameters(latitude: annotationEntity.latitude, longitude: annotationEntity.longitude) as [String : AnyObject], withPageNumber: 51, annotation: annotationEntity)
+        flickrCollectionView.reloadData()
+        print("Added new Data")
     }
     
     //MARK: Setting MapView Coordinates
@@ -72,22 +97,11 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         return Int((sentAnnotation.annotations?.photo?.count)!)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
-        let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        let availableWidth = view.frame.width + 1
-        let widthPerItem = availableWidth / 4
-        collectionViewLayout?.sectionInset.left = 10.0
-        collectionViewLayout?.sectionInset.right = 10.0
-        
-        return CGSize(width: widthPerItem, height: widthPerItem)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "flickrCell",for: indexPath) as! FlickrPhotoCell
         
-        let photo = sentAnnotation.annotations?.photo?.allObjects[indexPath.row] as! Photo
+        let photo = annotationEntity.photo?.allObjects[indexPath.row] as! Photo
         let imageString = photo.imageData!
         let imageURL = URL(string: imageString)
         let imageData = try? Data(contentsOf: imageURL!)

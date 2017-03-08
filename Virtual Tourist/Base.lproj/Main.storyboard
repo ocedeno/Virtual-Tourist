@@ -117,11 +117,26 @@
                                     <constraint firstAttribute="trailing" secondItem="ga1-wR-7tn" secondAttribute="trailing" id="Rj9-cX-CkB"/>
                                 </constraints>
                             </stackView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="uao-LI-I6b">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="UKj-UM-txs"/>
+                                    <barButtonItem title="New Collection" id="dbT-sC-N9G">
+                                        <connections>
+                                            <action selector="newCollectionButton:" destination="61p-cs-QYQ" id="hnp-MB-QMR"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="aqs-I1-IDf"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kub-sq-svv" firstAttribute="leading" secondItem="dqF-Nl-pY8" secondAttribute="leading" id="1cg-z1-Dsz"/>
                             <constraint firstAttribute="trailing" secondItem="kub-sq-svv" secondAttribute="trailing" id="1yl-6o-VRJ"/>
+                            <constraint firstAttribute="trailing" secondItem="uao-LI-I6b" secondAttribute="trailing" id="FoY-f7-1l3"/>
+                            <constraint firstItem="uao-LI-I6b" firstAttribute="leading" secondItem="dqF-Nl-pY8" secondAttribute="leading" id="Sy9-WU-VdM"/>
+                            <constraint firstAttribute="bottom" secondItem="uao-LI-I6b" secondAttribute="bottom" id="aYH-dd-2PN"/>
                             <constraint firstAttribute="bottom" secondItem="kub-sq-svv" secondAttribute="bottom" constant="20" symbolic="YES" id="eB9-e5-lPO"/>
                             <constraint firstItem="kub-sq-svv" firstAttribute="top" secondItem="dqF-Nl-pY8" secondAttribute="top" constant="20" symbolic="YES" id="scf-6T-yUU"/>
                         </constraints>
